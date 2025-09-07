@@ -1,12 +1,12 @@
 {
   "id": "iman-app",
-  "name": "إيمان — ١٠٠ حديث",
+  "name": "أحاديث مكارم الأخلاق",
   "short_name": "إيمان",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0b1e66",
-  "theme_color": "#0f3aa1",
+  "background_color": "#ffffff",
+  "theme_color": "#1553b0",
   "lang": "ar",
   "dir": "rtl",
   "icons": [
