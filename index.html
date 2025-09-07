@@ -7,26 +7,30 @@
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#1553b0">
   <style>
-    :root{{--blue-900:#0a2a66;--blue-700:#1553b0;--blue-600:#1f6fe0;--blue-500:#2a85ff;--blue-100:#e8f1ff;--text:#0b1220;--card:#ffffff;--muted:#4b5563;}}
-    *{{box-sizing:border-box}} html,body{{height:100%;margin:0}}
-    body{{font-family:"Tahoma","Segoe UI","Amiri",Arial,sans-serif;background:linear-gradient(180deg,var(--blue-100),#fff 40%);color:var(--text);line-height:1.85;}}
-    header{{position:sticky;top:0;z-index:10;background:linear-gradient(90deg,var(--blue-900),var(--blue-700));color:#fff;padding:16px 20px;box-shadow:0 6px 20px rgba(0,0,0,.12);}}
-    header h1{{margin:0;font-size:1.35rem;letter-spacing:.5px}}
-    .wrap{{max-width:900px;margin:18px auto 120px;padding:0 16px}}
-    .card{{background:var(--card);border:1px solid #e6eefc;border-radius:18px;box-shadow:0 10px 30px rgba(21,83,176,.08);overflow:hidden}}
-    .card .bar{{background:linear-gradient(90deg,var(--blue-600),var(--blue-500));height:6px}}
-    .card .content{{padding:18px 18px 4px}}
-    ol{{margin:0 0 22px;padding:0 24px}} li{{margin:10px 0;padding:12px 14px;background:#f8fbff;border:1px solid #eaf2ff;border-radius:12px;cursor:pointer;}}
-    li:hover{{background:#e6f0ff}}
-    .footer{{position:fixed;bottom:14px;inset-inline:14px;display:flex;gap:10px;justify-content:space-between;align-items:center;background:#ffffff;border:1px solid #e6eefc;border-radius:14px;padding:10px 14px;box-shadow:0 10px 28px rgba(0,0,0,.08)}}
-    .btn{{background:var(--blue-600);color:#fff;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:.95rem}}
-    .btn:active{{transform:translateY(1px)}} .hint{{color:var(--muted);font-size:.9rem}}
-    #hadith-view{{display:none;text-align:center;padding:40px 20px;}}
-    #hadith-view p{{font-size:1.8rem;line-height:2.4rem;color:var(--blue-900);}}
-    #back-btn{{margin-top:30px;background:var(--blue-700);color:#fff;padding:12px 20px;border:none;border-radius:12px;font-size:1rem;cursor:pointer;}}
+    :root{--blue-900:#0a2a66;--blue-700:#1553b0;--blue-600:#1f6fe0;--blue-500:#2a85ff;--blue-100:#e8f1ff;--text:#0b1220;--card:#ffffff;--muted:#4b5563;}
+    *{box-sizing:border-box} html,body{height:100%;margin:0}
+    body{font-family:"Tahoma","Segoe UI","Amiri",Arial,sans-serif;background:linear-gradient(180deg,var(--blue-100),#fff 40%);color:var(--text);line-height:1.85;}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(90deg,var(--blue-900),var(--blue-700));color:#fff;padding:16px 20px;box-shadow:0 6px 20px rgba(0,0,0,.12);}
+    header h1{margin:0;font-size:1.35rem;letter-spacing:.5px}
+    .wrap{max-width:900px;margin:18px auto 120px;padding:0 16px}
+    .card{background:var(--card);border:1px solid #e6eefc;border-radius:18px;box-shadow:0 10px 30px rgba(21,83,176,.08);overflow:hidden}
+    .card .bar{background:linear-gradient(90deg,var(--blue-600),var(--blue-500));height:6px}
+    .card .content{padding:18px 18px 4px}
+    ol{margin:0 0 22px;padding:0 24px} li{margin:10px 0;padding:12px 14px;background:#f8fbff;border:1px solid #eaf2ff;border-radius:12px;cursor:pointer;}
+    li:hover{background:#e6f0ff}
+    .footer{position:fixed;bottom:14px;inset-inline:14px;display:flex;gap:10px;justify-content:space-between;align-items:center;background:#ffffff;border:1px solid #e6eefc;border-radius:14px;padding:10px 14px;box-shadow:0 10px 28px rgba(0,0,0,.08)}
+    .btn{background:var(--blue-600);color:#fff;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:.95rem}
+    .btn:active{transform:translateY(1px)} .hint{color:var(--muted);font-size:.9rem}
+    #hadith-view{display:none;text-align:center;padding:40px 20px;}
+    #hadith-view p{font-size:1.8rem;line-height:2.4rem;color:var(--blue-900);}
+    #back-btn{margin-top:30px;background:var(--blue-700);color:#fff;padding:12px 20px;border:none;border-radius:12px;font-size:1rem;cursor:pointer;}
   </style>
   <script>
-    window.addEventListener('load', () => { if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js').catch(console.error); });
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+      }
+    });
   </script>
 </head>
 <body>
@@ -37,12 +41,12 @@
   <div id="hadith-view"><p id="hadith-text"></p><button id="back-btn" onclick="goBack()">العودة إلى الصفحة الرئيسية</button></div>
   <div class="footer" id="footer-bar"><span class="hint">اضغط على أي حديث لفتحه منفردًا.</span><button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">إلى الأعلى</button></div>
 <script>
-  const hadiths = ["«أكملُ المؤمنين إيمانًا أحسنُهم خُلُقًا» (الترمذي).", "«إنَّ من أحبِّكم إليَّ وأقربكم مني مجلسًا يوم القيامة أحاسنكم أخلاقًا» (البخاري).", "«ما كان الرِّفق في شيء إلا زانه، وما نُزع من شيء إلا شانه» (مسلم).", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—"];
+  const hadiths = ["—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—"];
   const list = document.getElementById('hadith-list');
-  hadiths.forEach(t => {{ const li = document.createElement('li'); li.textContent = t; li.addEventListener('click', () => openHadith(t)); list.appendChild(li); }});
+  hadiths.forEach((t, i) => { const li = document.createElement('li'); li.textContent = (i+1) + ' - ' + t; li.addEventListener('click', () => openHadith((i+1) + ' - ' + t)); list.appendChild(li); });
   const mainList = document.getElementById('main-list'); const hadithView = document.getElementById('hadith-view'); const hadithText = document.getElementById('hadith-text'); const footerBar = document.getElementById('footer-bar');
-  function openHadith(text){{ hadithText.textContent = text; mainList.style.display='none'; footerBar.style.display='none'; hadithView.style.display='block'; history.pushState({{view:'hadith'}}, '', '#hadith'); }}
-  function goBack(){{ hadithView.style.display='none'; mainList.style.display='block'; footerBar.style.display='flex'; history.pushState({{view:'list'}}, '', '#list'); }}
+  function openHadith(text){ hadithText.textContent = text; mainList.style.display='none'; footerBar.style.display='none'; hadithView.style.display='block'; }
+  function goBack(){ hadithView.style.display='none'; mainList.style.display='block'; footerBar.style.display='flex'; }
 </script>
 </body>
 </html>
