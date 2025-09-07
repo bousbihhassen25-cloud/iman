@@ -1,17 +1,8 @@
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open('makarim-cache').then(cache => {
-      return cache.addAll([
-        './',
-        './index.html',
-        './manifest.json'
-      ]);
-    })
-  );
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(response => response || fetch(e.request))
-  );
+const CACHE='makarim-cache-v1';
+const ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.map(k=>k!==CACHE&&caches.delete(k))))).then(()=>self.clients.claim())});
+self.addEventListener('fetch',e=>{
+  if(e.request.mode==='navigate'){e.respondWith(fetch(e.request).catch(()=>caches.match('./index.html')));return;}
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));
 });
